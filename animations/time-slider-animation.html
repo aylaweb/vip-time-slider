@@ -1,0 +1,39 @@
+<!--
+Copyright (c) 2016 The Ayla Project Authors.
+This code may only be used under the MIT style license found at http://aylaweb.github.io/LICENSE.txt
+The complete set of authors may be found at http://aylaweb.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://aylaweb.github.io/CONTRIBUTORS.txt
+-->
+
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../neon-animation/neon-animation-behavior.html">
+<link rel="import" href="../../vip-react/vip-react-behavior.html">
+<link rel="import" href="../../vip-seektime/vip-seektime-behavior.html">
+<link rel="import" href="../../vip-onoff/vip-onoff-behavior.html">
+
+
+<script>
+
+    Polymer({
+        is: 'time-slider-animation',
+        behaviors: [
+            Polymer.NeonAnimationBehavior,
+            Ayla.VipRuleBehavior, Ayla.VipSeekTimeBehavior,
+            Ayla.VipOnOffBehavior],
+        configure: function (config) {
+            var node = config.node;
+            this._effect = new GroupEffect([new KeyframeEffect(node.$.progressBar,
+                    [{height: 0, fill: 'blue'}, {height: node.$.backgroundBar.height.baseVal.value + "px", fill: 'blue'}]
+                            ,{duration: node.duration * 1000}), 
+                    new KeyframeEffect(node.$.sliderKnob,
+                    [{cy: 10, fill: 'blue', stroke: 'green'}, {cy: node.$.backgroundBar.height.baseVal.value + 10 + "px", fill: 'blue', stroke: 'green'}],{duration: node.duration * 1000})]);
+                
+            this.seekTimeSource = config.seekTimeSource;
+            this.onOffSource = config.onOffSource;
+            this.id = config.id;
+            return this._effect;
+        }
+
+    });
+
+</script>
